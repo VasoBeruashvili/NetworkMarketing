@@ -1,0 +1,42 @@
+﻿<form name="distributorPersonalForm" novalidate>
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal" ng-click="cancel()">&times;</a>
+        <h4 class="modal-title" id="modal-title">პირადი ინფორმაციის {{modalState}}</h4>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <div class="form-group">
+            <label for="type">ტიპი</label>
+            <select id="type" class="form-control" ng-model="obj.docTypeId" required>
+                <option ng-repeat="it in infoTypes" value="{{it.id}}">{{it.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="series">საბუთის სერია</label>
+            <input type="text" class="form-control" id="series" ng-model="obj.docSeries" maxlength="10" />
+        </div>
+        <div class="form-group">
+            <label for="number">საბუთის ნომერი</label>
+            <input type="text" class="form-control" id="number" ng-model="obj.docNumber" maxlength="10" />
+        </div>
+        <div class="form-group">
+            <label for="issueDate">გაცემის თარიღი</label>
+            <input type="text" id="issueDate" class="form-control date-picker" uib-datepicker-popup="dd.MM.yyyy" ng-model="obj.docIssueDate" is-open="popupDate.openedIssueDate" datepicker-options="dateOptions" ng-required="true" clear-text="გასუფთავება" current-text="მიმდინარე" close-text="დახურვა" ng-click="openIssueDate()" readonly required />
+        </div>
+        <div class="form-group">
+            <label for="deadline">საბუთის ვადა</label>
+            <input type="text" id="deadline" class="form-control date-picker" uib-datepicker-popup="dd.MM.yyyy" ng-model="obj.docDeadline" is-open="popupDate.openedDeadline" datepicker-options="dateOptions" ng-required="true" clear-text="გასუფთავება" current-text="მიმდინარე" close-text="დახურვა" ng-click="openDeadline()" readonly required />
+        </div>
+        <div class="form-group">
+            <label for="personalNumber">პირადი ნომერი</label>
+            <input type="text" class="form-control" id="personalNumber" ng-model="obj.personalNumber" maxlength="50" required />
+        </div>
+        <div class="form-group">
+            <label for="issuingAgency">გამცემი ორგანო</label>
+            <input type="text" class="form-control" id="issuingAgency" ng-model="obj.issuingAgency" maxlength="100" />
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-primary" ng-click="save()" ng-disabled="!distributorPersonalForm.$valid"><i class="fa fa-save"></i> შენახვა</a>
+        <a class="btn btn-default" ng-click="cancel()"><i class="fa fa-close"></i> დახურვა</a>
+    </div>
+</form>

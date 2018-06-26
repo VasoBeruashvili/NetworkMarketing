@@ -1,0 +1,145 @@
+﻿<form name="distributorForm" novalidate>
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal" ng-click="cancel()">&times;</a>
+        <h3 class="modal-title" id="modal-title">დისტრიბუტორის {{modalState}}</h3>
+    </div>
+    <div class="modal-body popup-tabset-container" id="modal-body">
+        <uib-tabset active="active">
+            <uib-tab index="0">
+                <uib-tab-heading>
+                    <i class="fa fa-home"></i> ძირითადი
+                </uib-tab-heading>
+                <br />
+                <div class="form-group">
+                    <label for="FirstName">ვისი რეკომენდაციით?</label>
+                    <input type="text" id="distributor" ng-model="selectedDistributor" placeholder="დისტრიბუტორის სახელი ან გვარი" uib-typeahead="distributor.firstName + ' ' + distributor.lastName for distributor in searchDistributors($viewValue)" typeahead-loading="loadingDistributorLocations" typeahead-no-results="noDistributorsResults" class="form-control">
+                    <i ng-show="loadingDistributorLocations" class="fa fa-refresh"></i>
+                    <div ng-show="noDistributorsResults">
+                        <i class="fa fa-remove"></i> დისტრიბუტორი ვერ მოიძებნა
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="form-group">
+                    <label for="FirstName">სახელი</label>
+                    <input type="text" class="form-control" id="firstName" ng-model="obj.firstName" maxlength="50" required>
+                </div>
+                <div class="form-group">
+                    <label for="LastName">გვარი</label>
+                    <input type="text" class="form-control" id="lastName" ng-model="obj.lastName" maxlength="50" required>
+                </div>
+                <div class="form-group">
+                    <label for="BirthDate">დაბადების თარიღი</label>
+                    <input type="text" id="birthDate" class="form-control date-picker" uib-datepicker-popup="dd.MM.yyyy" ng-model="obj.birthDate" is-open="popupBirthDate.opened" datepicker-options="dateOptions" ng-required="true" clear-text="გასუფთავება" current-text="მიმდინარე" close-text="დახურვა" ng-click="openBirthDate()" readonly required />
+                </div>
+                <div class="form-group">
+                    <label for="gender">სქესი</label>
+                    <select id="gender" class="form-control" ng-model="obj.genderId" required>
+                        <option value="1">მამრობითი</option>
+                        <option value="2">მდედრობითი</option>
+                    </select>
+                </div>
+            </uib-tab>
+
+
+
+            <uib-tab index="1" select="getPersonalInfos()">
+                <uib-tab-heading>
+                    პირადი
+                </uib-tab-heading>
+                <br />
+                <div class="form-inline">
+                    <a class="btn btn-sm btn-primary" ng-click="addPersonalInfo()"><i class="fa fa-plus"></i> დამატება</a>
+                </div>
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>ტიპი</th>
+                            <th>გაცემის თარიღი</th>
+                            <th>მოქმედების ვადა</th>
+                            <th>პირადი ნომერი</th>
+                            <th>გამცემი ორგანო</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="pi in obj.personalInfos | filter: filterDeletedObjects">
+                            <td>{{pi.docTypeName}}</td>
+                            <td>{{pi.docIssueDate}}</td>
+                            <td>{{pi.docDeadline}}</td>
+                            <td>{{pi.personalNumber}}</td>
+                            <td>{{pi.issuingAgency}}</td>
+                            <td>
+                                <a class="btn btn-xs btn-warning" title="რედაქტირება" ng-click="addPersonalInfo($index)"><i class="fa fa-pencil"></i></a>
+                                <a class="btn btn-xs btn-danger" title="წაშლა" ng-click="deleteInfo($index, EnumInfoTypes.Personal)"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </uib-tab>
+
+            <uib-tab index="2" select="getContactInfos()">
+                <uib-tab-heading>
+                    საკონტაქტო
+                </uib-tab-heading>
+                <br />
+                <div class="form-inline">
+                    <a class="btn btn-sm btn-primary" ng-click="addContactInfo()"><i class="fa fa-plus"></i> დამატება</a>
+                </div>
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>ტიპი</th>
+                            <th>კომენტარი</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="ci in obj.contactInfos | filter: filterDeletedObjects">
+                            <td>{{ci.typeName}}</td>
+                            <td>{{ci.comment}}</td>
+                            <td>
+                                <a class="btn btn-xs btn-warning" title="რედაქტირება" ng-click="addContactInfo($index)"><i class="fa fa-pencil"></i></a>
+                                <a class="btn btn-xs btn-danger" title="წაშლა" ng-click="deleteInfo($index, EnumInfoTypes.Contact)"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </uib-tab>
+
+            <uib-tab index="3" select="getAddressInfos()">
+                <uib-tab-heading>
+                    მისამართი
+                </uib-tab-heading>
+                <br />
+                <div class="form-inline">
+                    <a class="btn btn-sm btn-primary" ng-click="addAddressInfo()"><i class="fa fa-plus"></i> დამატება</a>
+                </div>
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>ტიპი</th>
+                            <th>მისამართი</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="ai in obj.addressInfos | filter: filterDeletedObjects">
+                            <td>{{ai.typeName}}</td>
+                            <td>{{ai.address}}</td>
+                            <td>
+                                <a class="btn btn-xs btn-warning" title="რედაქტირება" ng-click="addAddressInfo($index)"><i class="fa fa-pencil"></i></a>
+                                <a class="btn btn-xs btn-danger" title="წაშლა" ng-click="deleteInfo($index, EnumInfoTypes.Address)"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-primary" ng-click="save()" ng-disabled="!distributorForm.$valid"><i class="fa fa-save"></i> შენახვა</a>
+        <a class="btn btn-default" ng-click="cancel()"><i class="fa fa-close"></i> დახურვა</a>
+    </div>
+</form>

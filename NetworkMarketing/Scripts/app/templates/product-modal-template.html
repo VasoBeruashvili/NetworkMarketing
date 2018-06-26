@@ -1,0 +1,24 @@
+﻿<form name="productForm" novalidate>
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal" ng-click="cancel()">&times;</a>
+        <h4 class="modal-title" id="modal-title">პროდუქტის {{modalState}}</h4>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <div class="form-group">
+            <label for="code">კოდი</label>
+            <input type="text" class="form-control" id="code" ng-model="obj.code" maxlength="20" required>
+        </div>
+        <div class="form-group">
+            <label for="name">დასახელება</label>
+            <input type="text" class="form-control" id="name" ng-model="obj.name" maxlength="50" required>
+        </div>
+        <div class="form-group">
+            <label for="unitPrice">ერთეულის ფასი</label>
+            <input type="number" class="form-control" id="unitPrice" ng-model="obj.unitPrice" required>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-primary" ng-click="save()" ng-disabled="!productForm.$valid"><i class="fa fa-save"></i> შენახვა</a>
+        <a class="btn btn-default" ng-click="cancel()"><i class="fa fa-close"></i> დახურვა</a>
+    </div>
+</form>

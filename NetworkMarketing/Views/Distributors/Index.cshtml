@@ -1,0 +1,39 @@
+﻿<script src="~/Scripts/app/services/distributors-service.js"></script>
+<script src="~/Scripts/app/controllers/distributor-personal-info-modal-controller.js"></script>
+<script src="~/Scripts/app/controllers/distributor-contact-info-modal-controller.js"></script>
+<script src="~/Scripts/app/controllers/distributor-address-info-modal-controller.js"></script>
+<script src="~/Scripts/app/controllers/distributor-modal-controller.js"></script>
+<script src="~/Scripts/app/controllers/distributors-controller.js"></script>
+
+<div class="container" ng-controller="distributors-controller">
+    <div class="form-inline table-toolbar">
+        <a class="btn btn-sm btn-primary" ng-click="openModal()"><i class="fa fa-plus"></i> დამატება</a>
+        <input class="form-control input-sm pull-right" placeholder="ძებნა..." ng-model="filterDistributors" />
+    </div>
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>სახელი</th>
+                <th>გვარი</th>
+                <th>პირადი ნომერი</th>
+                <th>დაბადების თარიღი</th>
+                <th>სქესი</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="d in distributors | filter: filterDistributors">
+                <td>{{d.firstName}}</td>
+                <td>{{d.lastName}}</td>
+                <td>{{d.personalNumber}}</td>
+                <td>{{d.birthDate}}</td>
+                <td>{{d.gender}}</td>
+                <td>
+                    <a class="btn btn-xs btn-warning" title="რედაქტირება" ng-click="openModal($index)"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-xs btn-danger" title="წაშლა" ng-click="deleteDistributor(d.id)"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

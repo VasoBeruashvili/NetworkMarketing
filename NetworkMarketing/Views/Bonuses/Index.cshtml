@@ -1,0 +1,31 @@
+﻿<script src="~/Scripts/app/services/bonuses-service.js"></script>
+<script src="~/Scripts/app/controllers/bonuses-controller.js"></script>
+
+<div class="container" ng-controller="bonuses-controller">
+    <div class="form-inline table-toolbar">
+        <input type="text" id="fromDate" class="form-control input-sm pull-left date-picker" uib-datepicker-popup="dd.MM.yyyy" ng-model="fromDate" is-open="popupDate.openedFrom" datepicker-options="dateOptions" ng-required="true" clear-text="გასუფთავება" current-text="მიმდინარე" close-text="დახურვა" ng-click="openFromDate()" readonly />
+        <input type="text" id="toDate" class="form-control input-sm pull-left date-picker" uib-datepicker-popup="dd.MM.yyyy" ng-model="toDate" is-open="popupDate.openedTo" datepicker-options="dateOptions" ng-required="true" clear-text="გასუფთავება" current-text="მიმდინარე" close-text="დახურვა" ng-click="openToDate()" readonly />
+
+        <a class="btn btn-sm btn-default pull-left btn-refresh" ng-click="loadBonuses()"><i class="fa fa-refresh"></i> განახლება</a>
+                
+        <input class="form-control input-sm pull-right" placeholder="ძებნა..." ng-model="filterBonuses" />
+        <a class="btn btn-sm btn-success pull-right btn-calculate" ng-click="calculate()"><i class="fa fa-calculator"></i> გადათვლა</a>
+    </div>
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>თარიღი</th>
+                <th>დისტრიბუტორი</th>
+                <th>ბონუსის თანხა</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="b in bonuses | filter: filterBonuses">
+                <td>{{b.calculationDate}}</td>
+                <td>{{b.distributorFirstName}} {{b.distributorLastName}}</td>
+                <td>{{b.amount | number: 2}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,44 @@
+﻿<form name="productFlowForm" novalidate>
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal" ng-click="cancel()">&times;</a>
+        <h4 class="modal-title" id="modal-title">გაყიდვის {{modalState}}</h4>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <div class="form-group">
+            <label for="operationDate">თარიღი</label>
+            <input type="text" id="operationDate" class="form-control date-picker" uib-datepicker-popup="dd.MM.yyyy" ng-model="obj.operationDate" is-open="popupOperationDate.opened" datepicker-options="dateOptions" ng-required="true" clear-text="გასუფთავება" current-text="მიმდინარე" close-text="დახურვა" ng-click="openOperationDate()" readonly required />
+        </div>
+        <div class="form-group">
+            <label for="distributor"><i class="fa fa-search"></i> დისტრიბუტორი</label>
+            <input type="text" id="distributor" ng-model="selectedDistributor" placeholder="დისტრიბუტორის სახელი ან გვარი" uib-typeahead="distributor.firstName + ' ' + distributor.lastName for distributor in searchDistributors($viewValue)" typeahead-loading="loadingDistributorLocations" typeahead-no-results="noDistributorsResults" class="form-control" required>
+            <i ng-show="loadingDistributorLocations" class="fa fa-refresh"></i>
+            <div ng-show="noDistributorsResults">
+                <i class="fa fa-remove"></i> დისტრიბუტორი ვერ მოიძებნა
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="product"><i class="fa fa-search"></i> პროდუქტი</label>
+            <input type="text" id="product" ng-model="selectedProduct" placeholder="პროდუქტის კოდი ან დასახელება" uib-typeahead="product.code + ' - ' + product.name for product in searchProducts($viewValue)" typeahead-loading="loadingProductsLocations" typeahead-no-results="noProductsResults" class="form-control" required>
+            <i ng-show="loadingProductsLocations" class="fa fa-refresh"></i>
+            <div ng-show="noProductsResults">
+                <i class="fa fa-remove"></i> პროდუქტი ვერ მოიძებნა
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="productUnitPrice">პროდუქტის ერთეულის ფასი</label>
+            <input type="number" class="form-control" id="productUnitPrice" ng-model="obj.productUnitPrice" ng-change="calculateAmount()" readonly required>
+        </div>
+        <div class="form-group">
+            <label for="quantity">რაოდენობა</label>
+            <input type="number" class="form-control" id="quantity" ng-model="obj.quantity" ng-change="calculateAmount()" required>
+        </div>
+        <div class="form-group">
+            <label for="amount">ღირებულება</label>
+            <input type="number" class="form-control" id="amount" ng-model="obj.amount" readonly required>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-primary" ng-click="save()" ng-disabled="!productFlowForm.$valid"><i class="fa fa-save"></i> შენახვა</a>
+        <a class="btn btn-default" ng-click="cancel()"><i class="fa fa-close"></i> დახურვა</a>
+    </div>
+</form>
